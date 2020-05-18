@@ -3,7 +3,9 @@ import {
   fetchWeatherForCurrentLocation,
   fetchWeatherForCity,
 } from "../service/weatherService";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput } from "react-native";
+import { Button } from "react-native-elements";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Weather from "../components/Weather";
 import { weatherConditions } from "../utils/weather/weather-conditions";
 
@@ -74,18 +76,33 @@ export default class Home extends React.Component {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            height: 50,
+            height: 60,
           }}
         >
           <TextInput
-            style={{ height: 100, width: 250, color: "#ffffff", fontSize: 30 }}
+            style={{ height: 90, width: 200, color: "white", fontSize: 30 }}
             value={this.state.location}
             onChangeText={(location) => this.setState({ location })}
             multiline
           />
-          <Button title="Search" onPress={() => this.getWeatherForCity()} />
           <Button
-            title="Current Location"
+            icon={
+              <MaterialCommunityIcons
+                size={30}
+                name="map-search"
+                color="white"
+              />
+            }
+            onPress={() => this.getWeatherForCity()}
+          />
+          <Button
+            icon={
+              <MaterialCommunityIcons
+                size={30}
+                name="crosshairs-gps"
+                color="white"
+              />
+            }
             onPress={() => this.getWeatherForCurrentLocation()}
           />
         </View>

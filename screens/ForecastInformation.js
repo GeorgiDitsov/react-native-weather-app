@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Text, FlatList, TextInput, Button } from "react-native";
+import { View, Text, FlatList, TextInput } from "react-native";
+import { Button } from "react-native-elements";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ForecastCard from "../components/ForecastCard";
 import {
   fetchForecastforCurrentLocation,
@@ -69,26 +71,33 @@ export default class ForecastInformation extends React.Component {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                height: 50,
+                height: 60,
               }}
             >
               <TextInput
-                style={{
-                  height: 100,
-                  width: 250,
-                  color: "#000000",
-                  fontSize: 30,
-                }}
+                style={{ height: 90, width: 200, color: "black", fontSize: 30 }}
                 value={this.state.location}
                 onChangeText={(location) => this.setState({ location })}
                 multiline
               />
               <Button
-                title="Search"
+                icon={
+                  <MaterialCommunityIcons
+                    size={30}
+                    name="map-search"
+                    color="white"
+                  />
+                }
                 onPress={() => this.getForecastForCity()}
               />
               <Button
-                title="Current Location"
+                icon={
+                  <MaterialCommunityIcons
+                    size={30}
+                    name="crosshairs-gps"
+                    color="white"
+                  />
+                }
                 onPress={() => this.getForecastForCurrentLocation()}
               />
             </View>
