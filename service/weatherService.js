@@ -1,5 +1,6 @@
-const BASE_URL = `http://api.openweathermap.org/data/2.5/`;
 import { API_KEY } from "../utils/weather/weather-api-key";
+
+const BASE_URL = `http://api.openweathermap.org/data/2.5/`;
 
 export const fetchWeatherForCurrentLocation = async (latitude, longitude) => {
   const result = await fetch(

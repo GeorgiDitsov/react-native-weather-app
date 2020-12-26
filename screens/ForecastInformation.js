@@ -22,29 +22,28 @@ export default class ForecastInformation extends React.Component {
 
   getForecastForCurrentLocation() {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      (position) =>
         fetchForecastforCurrentLocation(
           position.coords.latitude,
           position.coords.longitude
-        ).then((data) => {
+        ).then((data) =>
           this.setState({
             location: data.city.name,
             forecast: data,
             isLoading: false,
-          });
-        });
-      },
+          })
+        ),
       (error) => this.setState({ error: error.message })
     );
   }
 
   getForecastForCity() {
-    fetchForecastForCity(this.state.location).then((data) => {
+    fetchForecastForCity(this.state.location).then((data) =>
       this.setState({
         forecast: data,
         isLoading: false,
-      });
-    });
+      })
+    );
   }
 
   render() {

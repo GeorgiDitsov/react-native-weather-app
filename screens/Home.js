@@ -3,11 +3,11 @@ import {
   fetchWeatherForCurrentLocation,
   fetchWeatherForCity,
 } from "../service/weatherService";
-import { View, Text, TextInput } from "react-native";
+import { Text, TextInput, View } from "react-native";
+import { weatherConditions } from "../utils/weather/weather-conditions";
 import { Button } from "react-native-elements";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Weather from "../components/Weather";
-import { weatherConditions } from "../utils/weather/weather-conditions";
 
 export default class Home extends React.Component {
   state = {
@@ -24,32 +24,30 @@ export default class Home extends React.Component {
 
   getWeatherForCurrentLocation() {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      (position) =>
         fetchWeatherForCurrentLocation(
           position.coords.latitude,
           position.coords.longitude
-        ).then((weatherInfo) => {
-          console.log(weatherInfo);
+        ).then((weatherInfo) =>
           this.setState({
             location: weatherInfo.name,
             temperature: weatherInfo.main.temp,
             weatherCondition: weatherInfo.weather[0],
             isLoading: false,
-          });
-        });
-      },
+          })
+        ),
       (error) => this.setState({ error: error.message })
     );
   }
 
   getWeatherForCity() {
-    fetchWeatherForCity(this.state.location).then((weatherInfo) => {
+    fetchWeatherForCity(this.state.location).then((weatherInfo) =>
       this.setState({
         temperature: weatherInfo.main.temp,
         weatherCondition: weatherInfo.weather[0],
         isLoading: false,
-      });
-    });
+      })
+    );
   }
 
   render() {

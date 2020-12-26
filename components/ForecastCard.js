@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Card, Text, Divider } from "react-native-elements";
-import { View } from "react-native";
-import { styles } from "../styles/weather-data-style";
+import React from "react";
+import { Card, Divider, Text } from "react-native-elements";
 import { weatherConditions } from "../utils/weather/weather-conditions";
+import { styles } from "../styles/weather-data-style";
+import { View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
