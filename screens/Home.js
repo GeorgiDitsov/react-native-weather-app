@@ -3,10 +3,12 @@ import {
   fetchWeatherForCurrentLocation,
   fetchWeatherForCity,
 } from "../service/weatherService";
-import { Text, TextInput, View } from "react-native";
+import LoadingComponent from "../components/LoadingComponent";
+import { TextInput, View } from "react-native";
 import { weatherConditions } from "../utils/weather/weather-conditions";
 import { Button } from "react-native-elements";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import ErrorComponent from "../components/ErrorComponent";
 import Weather from "../components/Weather";
 
 export default class Home extends React.Component {
@@ -23,45 +25,48 @@ export default class Home extends React.Component {
   }
 
   getWeatherForCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(
-      (position) =>
-        fetchWeatherForCurrentLocation(
-          position.coords.latitude,
-          position.coords.longitude
-        ).then((weatherInfo) =>
+    navigator.geolocation.getCurrentPosition((position) =>
+      fetchWeatherForCurrentLocation(
+        position.coords.latitude,
+        position.coords.longitude
+      ).then((data) => {
+        if (data.cod == 200) {
           this.setState({
-            location: weatherInfo.name,
-            temperature: weatherInfo.main.temp,
-            weatherCondition: weatherInfo.weather[0],
+            location: data.name,
+            temperature: data.main.temp,
+            weatherCondition: data.weather[0],
+            error: undefined,
             isLoading: false,
-          })
-        ),
-      (error) => this.setState({ error: error.message })
-    );
-  }
-
-  getWeatherForCity() {
-    fetchWeatherForCity(this.state.location).then((weatherInfo) =>
-      this.setState({
-        temperature: weatherInfo.main.temp,
-        weatherCondition: weatherInfo.weather[0],
-        isLoading: false,
+          });
+        } else {
+          this.setState({ error: data.message, isLoading: false });
+        }
       })
     );
   }
 
+  getWeatherForCity() {
+    fetchWeatherForCity(this.state.location).then((data) => {
+      if (data.cod == 200) {
+        this.setState({
+          temperature: data.main.temp,
+          weatherCondition: data.weather[0],
+          error: undefined,
+          isLoading: false,
+        });
+      } else {
+        this.setState({ error: data.message, isLoading: false });
+      }
+    });
+  }
+
+  setLocation(location) {
+    this.setState({ location });
+  }
+
   render() {
     return this.state.isLoading ? (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#ffffff",
-        }}
-      >
-        <Text style={{ fontSize: 30 }}>Loading</Text>
-      </View>
+      <LoadingComponent />
     ) : (
       <View
         style={{
@@ -104,10 +109,14 @@ export default class Home extends React.Component {
             onPress={() => this.getWeatherForCurrentLocation()}
           />
         </View>
-        <Weather
-          weather={this.state.weatherCondition}
-          temperature={this.state.temperature}
-        />
+        {this.state.error ? (
+          <ErrorComponent message={this.state.error} />
+        ) : (
+          <Weather
+            weather={this.state.weatherCondition}
+            temperature={this.state.temperature}
+          />
+        )}
       </View>
     );
   }
