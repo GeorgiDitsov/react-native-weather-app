@@ -49,7 +49,7 @@ const ForecastCard = ({ detail, location }) => {
 
 ForecastCard.propTypes = {
   detail: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
+  location: PropTypes.string.isRequired,
 };
 
 export default ForecastCard;
