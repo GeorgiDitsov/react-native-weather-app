@@ -1,8 +1,9 @@
 import React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { errorStyle } from "../styles/error-component-style";
-import { Divider, Text } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import { styles } from "../styles/weather-data-style";
+import PropTypes from "prop-types";
 
 const ErrorComponent = ({ message }) => (
   <View style={[errorStyle.errorContainer]}>
@@ -12,5 +13,9 @@ const ErrorComponent = ({ message }) => (
 Error message: "${message}"`}</Text>
   </View>
 );
+
+ErrorComponent.propTypes = {
+  message: PropTypes.string.isRequired,
+};
 
 export default ErrorComponent;
