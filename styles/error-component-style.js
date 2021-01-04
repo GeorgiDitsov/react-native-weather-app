@@ -12,7 +12,7 @@ export const errorStyle = StyleSheet.create({
     color: "#ffffff",
   },
   errorMessage: {
-    fontSize: 25,
+    fontSize: 20,
     color: "#ffffff",
   },
 });
